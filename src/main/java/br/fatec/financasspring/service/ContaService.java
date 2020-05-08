@@ -21,6 +21,26 @@ public class ContaService {
 		return contas;
 	}
 	
+	public List<Conta> getByBank(String banco) {
+		List<Conta> _contas = new ArrayList<>();
+		for (Conta c : contas) {
+			if (c.getBanco().equalsIgnoreCase(banco)) {
+				_contas.add(c);
+			}
+		}
+		return _contas;
+	}
+	
+	public List<Conta> getByTitular(String titular) {
+		List<Conta> _contas = new ArrayList<>();
+		titular = titular.toLowerCase();
+		for (Conta c : contas) {
+			if (c.getTitular().toLowerCase().startsWith(titular)) {
+				_contas.add(c);
+			}
+		}
+		return _contas;
+	}
 	
 	public Conta get(Conta conta) {
 		for (Conta c : contas) {

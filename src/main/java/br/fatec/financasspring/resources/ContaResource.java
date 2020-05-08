@@ -35,6 +35,16 @@ public class ContaResource {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
+	@GetMapping(value = "/banco/{banco}")
+	public ResponseEntity<List<Conta>> getByBank(@PathVariable("banco") String banco) {
+		return ResponseEntity.ok(contas.getByBank(banco));
+	}
+	
+	@GetMapping(value = "/titular/{titular}")
+	public ResponseEntity<List<Conta>> getByTitular(@PathVariable("titular") String titular) {
+		return ResponseEntity.ok(contas.getByTitular(titular));
+	}
+	
 	@PostMapping
 	public ResponseEntity<Conta> add(@RequestBody Conta conta) {
 		contas.add(conta);
