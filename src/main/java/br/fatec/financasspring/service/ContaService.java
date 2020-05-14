@@ -1,26 +1,31 @@
 package br.fatec.financasspring.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.web.context.annotation.ApplicationScope;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.fatec.financasspring.model.Conta;
+import br.fatec.financasspring.repositories.ContaRepository;
 
-@ApplicationScope
+@Service
 public class ContaService {
-	private static List<Conta> contas = new ArrayList<>();
+	
+	@Autowired
+	private ContaRepository contaRepo;
 	
 	public ContaService() {}
 	
 	public void add(Conta conta) {
-		contas.add(conta);
+		contaRepo.save(conta);
 	}
 	
 	public List<Conta> getAll() {
-		return contas;
+		return contaRepo.findAll();
 	}
 	
+	/*
 	public List<Conta> getByBank(String banco) {
 		List<Conta> _contas = new ArrayList<>();
 		for (Conta c : contas) {
@@ -41,43 +46,33 @@ public class ContaService {
 		}
 		return _contas;
 	}
+	*/
 	
 	public Conta get(Conta conta) {
-		for (Conta c : contas) {
-			if (c.equals(conta)) {
-				return c;
-			}
-		}
-		return null;
+		Optional<Conta> _conta = contaRepo.findById(conta.getId());
+		return _conta.orElse(null);
 	}
 
-	public Conta get(Integer numero) {
-		return get(new Conta(numero));
+	public Conta get(Long id) {
+		return get(new Conta(id));
 	}
 
 	public boolean update(Conta conta) {
-		Conta _conta = get(conta);
-		if (_conta != null) {
-			_conta.setTitular(conta.getTitular());
-			_conta.setBanco(conta.getBanco());
-			_conta.setAgencia(conta.getAgencia());
+		if (contaRepo.existsById(conta.getId())) {
+			contaRepo.save(conta);
 			return true;
 		}
 		return false;
 	}
 	
-	public boolean delete(Integer numero) {
-		Conta _conta = get(numero);
-		if (_conta != null) {
-			contas.remove(_conta);
+	public boolean delete(Long id) {
+		Optional<Conta> _conta = contaRepo.findById(id);
+		if (_conta.isPresent()) {
+			contaRepo.delete(_conta.get());
 			return true;
 		}
 		return false;
 	}
 	
-	@Override
-	public String toString() {
-		return contas.toString();
-	}
 }
 

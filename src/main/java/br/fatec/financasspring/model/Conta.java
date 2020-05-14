@@ -1,6 +1,19 @@
 package br.fatec.financasspring.model;
 
-public class Conta {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Conta implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String titular;
     private String banco;
     private String agencia;
@@ -9,9 +22,17 @@ public class Conta {
     public Conta() {
 	}
     
-    public Conta(Integer numero) {
-    	setNumero(numero);
+    public Conta(Long id) {
+    	setId(id);
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getTitular() {
 		return titular;
@@ -49,7 +70,7 @@ public class Conta {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -60,10 +81,10 @@ public class Conta {
 		if (!(obj instanceof Conta))
 			return false;
 		Conta other = (Conta) obj;
-		if (numero == null) {
-			if (other.numero != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!numero.equals(other.numero))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
