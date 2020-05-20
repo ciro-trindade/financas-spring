@@ -10,61 +10,39 @@ import br.fatec.financasspring.model.Conta;
 import br.fatec.financasspring.repositories.ContaRepository;
 
 @Service
-public class ContaService {
+public class ContaService implements ServiceInterface<Conta> {
 	
 	@Autowired
 	private ContaRepository contaRepo;
 	
 	public ContaService() {}
 	
-	public void add(Conta conta) {		
-		contaRepo.save(conta);
+	@Override
+	public Conta create(Conta obj) {
+		contaRepo.save(obj);
+		return obj;
 	}
-	
-	public List<Conta> getAll() {
-		return contaRepo.findAll();
-	}
-	
-	/*
-	public List<Conta> getByBank(String banco) {
-		List<Conta> _contas = new ArrayList<>();
-		for (Conta c : contas) {
-			if (c.getBanco().equalsIgnoreCase(banco)) {
-				_contas.add(c);
-			}
-		}
-		return _contas;
-	}
-	
-	public List<Conta> getByTitular(String titular) {
-		List<Conta> _contas = new ArrayList<>();
-		titular = titular.toLowerCase();
-		for (Conta c : contas) {
-			if (c.getTitular().toLowerCase().startsWith(titular)) {
-				_contas.add(c);
-			}
-		}
-		return _contas;
-	}
-	*/
-	
-	public Conta get(Conta conta) {
-		Optional<Conta> _conta = contaRepo.findById(conta.getId());
+
+	@Override
+	public Conta findById(Long id) {
+		Optional<Conta> _conta = contaRepo.findById(id);
 		return _conta.orElse(null);
 	}
 
-	public Conta get(Long id) {
-		return get(new Conta(id));
+	@Override
+	public List<Conta> findAll() {
+		return contaRepo.findAll();
 	}
 
-	public boolean update(Conta conta) {
-		if (contaRepo.existsById(conta.getId())) {
-			contaRepo.save(conta);
+	public boolean update(Conta obj) {
+		if (contaRepo.existsById(obj.getId())) {
+			contaRepo.save(obj);
 			return true;
 		}
 		return false;
 	}
-	
+
+	@Override
 	public boolean delete(Long id) {
 		Optional<Conta> _conta = contaRepo.findById(id);
 		if (_conta.isPresent()) {
@@ -73,6 +51,6 @@ public class ContaService {
 		}
 		return false;
 	}
-	
+
 }
 
