@@ -1,6 +1,7 @@
 package br.fatec.financasspring.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -8,7 +9,8 @@ import javax.persistence.Table;
 
 @Table(name="tb_cliente")
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@DiscriminatorColumn(name = "nm_pertence_a_classe", length = 20)
 public abstract class Cliente extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
