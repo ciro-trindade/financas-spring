@@ -1,14 +1,17 @@
 package br.fatec.financasspring.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Table(name="tb_cliente")
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Cliente extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
@@ -16,6 +19,10 @@ public abstract class Cliente extends AbstractEntity {
     private String nome;
     @Column(name="ds_endereco", length=120)
     private String endereco;
+    
+    @OneToOne(cascade = CascadeType.ALL)    
+    @JoinColumn(name = "fk_conta_id", unique = true)
+    private Conta conta;
 
     public Cliente() { }
 
@@ -33,6 +40,14 @@ public abstract class Cliente extends AbstractEntity {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 }

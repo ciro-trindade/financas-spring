@@ -1,22 +1,32 @@
 package br.fatec.financasspring.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "tb_conta")
 @Entity
 public class Conta extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "nm_titular", length = 100)
-	private String titular;
 	@Column(name = "nm_banco", length = 60)
     private String banco;
 	@Column(name = "nm_agencia", length = 60)
     private String agencia;
 	@Column(name = "nr_numero")
     private Integer numero;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "conta_id")
+	private List<Movimentacao> movimentacoes;
 
     public Conta() {
 	}
@@ -25,15 +35,7 @@ public class Conta extends AbstractEntity {
     	setId(id);
     }
 
-	public String getTitular() {
-		return titular;
-	}
-
-	public void setTitular(String titular) {
-		this.titular = titular;
-	}
-
-	public String getBanco() {
+    public String getBanco() {
 		return banco;
 	}
 
@@ -57,9 +59,14 @@ public class Conta extends AbstractEntity {
 		this.numero = numero;
 	}
 
-	@Override
-	public String toString() {
-		return "Conta [titular=" + titular + ", banco=" + banco + ", agencia=" + agencia + ", numero=" + numero + "]";
+	@JsonIgnore
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
 	}
-	
+
+	@JsonProperty
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
+
 }
