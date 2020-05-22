@@ -24,10 +24,12 @@ public class Conta extends AbstractEntity {
 	@Column(name = "nr_numero")
     private Integer numero;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "conta_id")
+	
+	@OneToMany(cascade = CascadeType.ALL, 
+			   mappedBy = "conta")	
 	private List<Movimentacao> movimentacoes;
-
+	
+	
     public Conta() {
 	}
     
@@ -59,6 +61,7 @@ public class Conta extends AbstractEntity {
 		this.numero = numero;
 	}
 
+	
 	@JsonIgnore
 	public List<Movimentacao> getMovimentacoes() {
 		return movimentacoes;
