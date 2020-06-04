@@ -36,7 +36,7 @@ public class PessoaFisicaResource implements ResourceInterface<PessoaFisica> {
 
 	@Override
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable Long id) {
+	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
 		PessoaFisica _pf = pfService.findById(id);
 		if (_pf != null) {
 			return ResponseEntity.ok(_pf);
@@ -62,7 +62,7 @@ public class PessoaFisicaResource implements ResourceInterface<PessoaFisica> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (pfService.delete(id)) {
 			return ResponseEntity.ok().build();
 		}

@@ -5,7 +5,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -14,6 +15,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "tb_conta")
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Conta.listarPorBanco", 
+	            query = "select c from Conta c where c.banco like ?1"),
+	@NamedQuery(name = "Conta.listarPorBancoENumero", 
+	            query = "select c from Conta c where c.banco=?1 and" 
+	                  + " c.numero between ?2 and ?3"),
+	@NamedQuery(name = "Conta.listarPorNomeCliente", 
+	            query = "select c from Conta c join Cliente cc on" 
+	            + " cc.conta = c where cc.nome like ?1")
+})
 public class Conta extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 

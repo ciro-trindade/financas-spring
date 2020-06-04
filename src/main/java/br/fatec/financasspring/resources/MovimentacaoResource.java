@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.fatec.financasspring.model.Movimentacao;
-import br.fatec.financasspring.model.PessoaFisica;
 import br.fatec.financasspring.service.MovimentacaoService;
 
 @RestController
@@ -33,7 +32,7 @@ public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 
 	@Override
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable Long id) {
+	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
 		Movimentacao _mov = movService.findById(id);
 		if (_mov != null) {
 			return ResponseEntity.ok(_mov);
@@ -59,7 +58,7 @@ public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 
 	@Override
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (movService.delete(id)) {
 			return ResponseEntity.ok().build();
 		}

@@ -35,7 +35,7 @@ public class PessoaJuridicaResource implements ResourceInterface<PessoaJuridica>
 
 	@Override
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable Long id) {
+	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
 		PessoaJuridica _pj = pjService.findById(id);
 		if (_pj != null) {
 			return ResponseEntity.ok(_pj);
@@ -61,7 +61,7 @@ public class PessoaJuridicaResource implements ResourceInterface<PessoaJuridica>
 
 	@Override
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (pjService.delete(id)) {
 			return ResponseEntity.ok().build();
 		}

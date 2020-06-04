@@ -11,12 +11,13 @@ import br.fatec.financasspring.repositories.ContaRepository;
 
 @Service
 public class ContaService implements ServiceInterface<Conta> {
-	
+
 	@Autowired
 	private ContaRepository contaRepo;
-	
-	public ContaService() {}
-	
+
+	public ContaService() {
+	}
+
 	@Override
 	public Conta create(Conta obj) {
 		contaRepo.save(obj);
@@ -52,5 +53,15 @@ public class ContaService implements ServiceInterface<Conta> {
 		return false;
 	}
 
-}
+	public List<Conta> listarPorBanco(String banco) {
+		return contaRepo.listarPorBanco('%' + banco + '%');
+	}
 
+	public List<Conta> listarPorBancoENumero(String banco, Integer from, Integer to) {
+		return contaRepo.listarPorBancoENumero(banco, from, to);
+	}
+
+	public List<Conta> listarPorNomeCliente(String nome) {
+		return contaRepo.listarPorNomeCliente('%' + nome + '%');
+	}
+}

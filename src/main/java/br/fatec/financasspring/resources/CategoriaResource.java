@@ -56,7 +56,7 @@ public class CategoriaResource implements ResourceInterface<Categoria> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (categoriaService.delete(id)) {
 			return ResponseEntity.ok().build();
 		}
