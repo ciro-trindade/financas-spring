@@ -54,14 +54,16 @@ public class ContaService implements ServiceInterface<Conta> {
 	}
 
 	public List<Conta> listarPorBanco(String banco) {
-		return contaRepo.listarPorBanco('%' + banco + '%');
+		//return contaRepo.listarPorBanco(banco);
+		return contaRepo.findByBancoContaining(banco);
 	}
 
 	public List<Conta> listarPorBancoENumero(String banco, Integer from, Integer to) {
-		return contaRepo.listarPorBancoENumero(banco, from, to);
+		//return contaRepo.listarPorBancoENumero(banco, from, to);
+		return contaRepo.findByBancoAndNumeroBetween(banco, from, to);
 	}
 
 	public List<Conta> listarPorNomeCliente(String nome) {
-		return contaRepo.listarPorNomeCliente('%' + nome + '%');
+		return contaRepo.listarPorNomeCliente(nome);
 	}
 }

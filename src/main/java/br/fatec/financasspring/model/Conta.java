@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "tb_conta")
 @Entity
+/*
 @NamedQueries({
 	@NamedQuery(name = "Conta.listarPorBanco", 
 	            query = "select c from Conta c where c.banco like ?1"),
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 	            query = "select c from Conta c join Cliente cc on" 
 	            + " cc.conta = c where cc.nome like ?1")
 })
+*/
 public class Conta extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
