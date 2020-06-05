@@ -1,12 +1,18 @@
 package br.fatec.financasspring.service;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.fatec.financasspring.model.Conta;
 import br.fatec.financasspring.model.Movimentacao;
+import br.fatec.financasspring.model.TipoMovimentacao;
+import br.fatec.financasspring.repositories.ContaRepository;
 import br.fatec.financasspring.repositories.MovimentacaoRepository;
 
 @Service
@@ -14,7 +20,10 @@ public class MovimentacaoService implements ServiceInterface<Movimentacao> {
 
 	@Autowired
 	private MovimentacaoRepository repo;
-	
+
+	@Autowired
+	private ContaRepository contaRepo;
+
 	@Override
 	public Movimentacao create(Movimentacao obj) {
 		repo.save(obj);
@@ -49,6 +58,54 @@ public class MovimentacaoService implements ServiceInterface<Movimentacao> {
 			return true;
 		}
 		return false;
+	}
+
+	public BigDecimal mediaMovimentaoesPorContaETipo(Long contaId, String tipo) {
+		Optional<Conta> conta = contaRepo.findById(contaId);
+		if (conta.isPresent()) {
+			return repo.mediaMovimentaoesPorContaETipo(conta.get(), TipoMovimentacao.valueOf(tipo.toUpperCase()));
+		}
+		return null;
+	}
+
+	public Long numeroMovimentacoesPorConta(Long contaId) {
+		Optional<Conta> conta = contaRepo.findById(contaId);
+		if (conta.isPresent()) {
+			return repo.numeroMovimentacoesPorConta(conta.get());
+		}
+		return null;
+	}
+
+	public BigDecimal maiorMovimentacaoPorContaETipo(Long contaId, String tipo) {
+		Optional<Conta> conta = contaRepo.findById(contaId);
+		if (conta.isPresent()) {
+			return repo.maiorMovimentacaoPorContaETipo(conta.get(), TipoMovimentacao.valueOf(tipo.toUpperCase()));
+		}
+		return null;
+	}
+
+	public BigDecimal menorMovimentacaoPorContaETipo(Long contaId, String tipo) {
+		Optional<Conta> conta = contaRepo.findById(contaId);
+		if (conta.isPresent()) {
+			return repo.menorMovimentacaoPorContaETipo(conta.get(), TipoMovimentacao.valueOf(tipo.toUpperCase()));
+		}
+		return null;
+	}
+
+	public BigDecimal somaMovimentacoesPorContaTipoEPeriodo(Long contaId, String tipo, String from, String to) {
+		Optional<Conta> conta = contaRepo.findById(contaId);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date inicio = dateFormat.parse(from);
+			Date fim = dateFormat.parse(to);
+			if (conta.isPresent()) {
+				return repo.somaMovimentacoesPorContaTipoEPeriodo(conta.get(),
+						TipoMovimentacao.valueOf(tipo.toUpperCase()), inicio, fim);
+			}
+		} catch (Exception e) {
+			return null;
+		}
+		return null;
 	}
 
 }

@@ -1,17 +1,8 @@
 package br.fatec.financasspring.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "tb_conta")
 @Entity
@@ -35,13 +26,7 @@ public class Conta extends AbstractEntity {
 	@Column(name = "nm_agencia", length = 60)
     private String agencia;
 	@Column(name = "nr_numero")
-    private Integer numero;
-	
-	
-	@OneToMany(cascade = CascadeType.ALL, 
-			   mappedBy = "conta")	
-	private List<Movimentacao> movimentacoes;
-	
+    private Integer numero;	
 	
     public Conta() {
 	}
@@ -72,17 +57,6 @@ public class Conta extends AbstractEntity {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
-	}
-
-	
-	@JsonIgnore
-	public List<Movimentacao> getMovimentacoes() {
-		return movimentacoes;
-	}
-
-	@JsonProperty
-	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
-		this.movimentacoes = movimentacoes;
 	}
 
 }

@@ -1,5 +1,6 @@
 package br.fatec.financasspring.resources;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,52 @@ public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+
+	@GetMapping(value = "/media/{conta}/{tipo}")
+	public ResponseEntity<?> getMediaPorContaETipo(@PathVariable("conta") Long contaId, @PathVariable("tipo") String tipo) {
+		BigDecimal media = movService.mediaMovimentaoesPorContaETipo(contaId, tipo);
+		if (media != null) {
+			return ResponseEntity.ok(media);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@GetMapping(value = "/numero/{conta}")
+	public ResponseEntity<?> getNumeroPorConta(@PathVariable("conta") Long contaId) {
+		Long numero = movService.numeroMovimentacoesPorConta(contaId);
+		if (numero != null) {
+			return ResponseEntity.ok(numero);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();		
+	}
+		
+	@GetMapping(value = "/maior/{conta}/{tipo}")
+	public ResponseEntity<?> getMaiorPorContaETipo(@PathVariable("conta") Long contaId, @PathVariable("tipo") String tipo) {
+		BigDecimal maior = movService.maiorMovimentacaoPorContaETipo(contaId, tipo);
+		if (maior != null) {
+			return ResponseEntity.ok(maior);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();		
+	}
+	
+	@GetMapping(value = "/menor/{conta}/{tipo}")
+	public ResponseEntity<?> getMenorPorContaETipo(@PathVariable("conta") Long contaId, @PathVariable("tipo") String tipo) {
+		BigDecimal menor = movService.menorMovimentacaoPorContaETipo(contaId, tipo);
+		if (menor != null) {
+			return ResponseEntity.ok(menor);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();		
+	}
+	
+	@GetMapping(value = "/soma/{conta}/{tipo}/{from}/{to}")
+	public ResponseEntity<?> getsomaPorContaTipoEPeriodo(@PathVariable("conta") Long contaId, 
+			@PathVariable("tipo") String tipo, @PathVariable("from") String from, @PathVariable("to") String to) {
+		BigDecimal soma = movService.somaMovimentacoesPorContaTipoEPeriodo(contaId, tipo, from, to);
+		if (soma != null) {
+			return ResponseEntity.ok(soma);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();		
 	}
 
 }
