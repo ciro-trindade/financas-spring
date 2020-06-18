@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.fatec.financasspring.model.PessoaFisica;
@@ -11,6 +12,8 @@ import br.fatec.financasspring.repositories.PessoaFisicaRepository;
 
 @Service
 public class PessoaFisicaService implements ServiceInterface<PessoaFisica> {
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
 	private PessoaFisicaRepository repo;
@@ -21,6 +24,7 @@ public class PessoaFisicaService implements ServiceInterface<PessoaFisica> {
 
 	@Override
 	public PessoaFisica create(PessoaFisica obj) {
+		obj.setSenha(passwordEncoder.encode(obj.getSenha()));
 		repo.save(obj);
 		return obj;
 	}

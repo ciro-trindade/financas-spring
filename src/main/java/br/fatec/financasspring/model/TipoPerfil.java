@@ -1,13 +1,13 @@
 package br.fatec.financasspring.model;
 
-public enum TipoMovimentacao {
-	ENTRADA(1, "Entrada"), 
-	SAIDA(2, "Saída");
+public enum TipoPerfil {
+	ADMIN(1, "HOLE_ADMIN"), 
+	CLIENTE(2, "HOLE_CLIENTE");
 	
 	private Integer cod;
 	private String descricao;
 
-	private TipoMovimentacao(Integer cod, String descricao) {
+	private TipoPerfil(Integer cod, String descricao) {
 		this.cod = cod;
 		this.descricao = descricao;
 	}
@@ -20,16 +20,16 @@ public enum TipoMovimentacao {
 		return descricao;
 	}
 
-	public static TipoMovimentacao toEnum(Integer cod) {
+	public static TipoPerfil toEnum(Integer cod) {
 		if (cod == null) {
 			return null;
 		}
-		for (TipoMovimentacao x : TipoMovimentacao.values()) {
+		for (TipoPerfil x : TipoPerfil.values()) {
 			if (cod.equals(x.getCod())) {
 				return x;
 			}
 		}
-		throw new IllegalArgumentException("Código de movimentação inválido: " + cod);
+		throw new IllegalArgumentException("Código do perfil inválido: " + cod);
 	}
 	
 }

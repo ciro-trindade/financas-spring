@@ -29,7 +29,7 @@ public class Movimentacao extends AbstractEntity {
 	@Column(name = "vl_valor")
 	private BigDecimal valor;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "nm_tipo_movimentacao")
 	private TipoMovimentacao tipo;
 

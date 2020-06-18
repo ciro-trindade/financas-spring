@@ -85,7 +85,7 @@ public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 	}
 		
 	@GetMapping(value = "/maior/{conta}/{tipo}")
-	public ResponseEntity<?> getMaiorPorContaETipo(@PathVariable("conta") Long contaId, @PathVariable("tipo") String tipo) {
+	public ResponseEntity<?> getMaiorPorContaETipo(@PathVariable("conta") Long contaId, @PathVariable("tipo") Integer tipo) {
 		BigDecimal maior = movService.maiorMovimentacaoPorContaETipo(contaId, tipo);
 		if (maior != null) {
 			return ResponseEntity.ok(maior);
@@ -94,7 +94,7 @@ public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 	}
 	
 	@GetMapping(value = "/menor/{conta}/{tipo}")
-	public ResponseEntity<?> getMenorPorContaETipo(@PathVariable("conta") Long contaId, @PathVariable("tipo") String tipo) {
+	public ResponseEntity<?> getMenorPorContaETipo(@PathVariable("conta") Long contaId, @PathVariable("tipo") Integer tipo) {
 		BigDecimal menor = movService.menorMovimentacaoPorContaETipo(contaId, tipo);
 		if (menor != null) {
 			return ResponseEntity.ok(menor);
@@ -104,7 +104,7 @@ public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 	
 	@GetMapping(value = "/soma/{conta}/{tipo}/{from}/{to}")
 	public ResponseEntity<?> getsomaPorContaTipoEPeriodo(@PathVariable("conta") Long contaId, 
-			@PathVariable("tipo") String tipo, @PathVariable("from") String from, @PathVariable("to") String to) {
+			@PathVariable("tipo") Integer tipo, @PathVariable("from") String from, @PathVariable("to") String to) {
 		BigDecimal soma = movService.somaMovimentacoesPorContaTipoEPeriodo(contaId, tipo, from, to);
 		if (soma != null) {
 			return ResponseEntity.ok(soma);

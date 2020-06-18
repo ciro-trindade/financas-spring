@@ -76,23 +76,23 @@ public class MovimentacaoService implements ServiceInterface<Movimentacao> {
 		return null;
 	}
 
-	public BigDecimal maiorMovimentacaoPorContaETipo(Long contaId, String tipo) {
+	public BigDecimal maiorMovimentacaoPorContaETipo(Long contaId, Integer tipo) {
 		Optional<Conta> conta = contaRepo.findById(contaId);
 		if (conta.isPresent()) {
-			return repo.maiorMovimentacaoPorContaETipo(conta.get(), TipoMovimentacao.valueOf(tipo.toUpperCase()));
+			return repo.maiorMovimentacaoPorContaETipo(conta.get(), TipoMovimentacao.toEnum(tipo));
 		}
 		return null;
 	}
 
-	public BigDecimal menorMovimentacaoPorContaETipo(Long contaId, String tipo) {
+	public BigDecimal menorMovimentacaoPorContaETipo(Long contaId, Integer tipo) {
 		Optional<Conta> conta = contaRepo.findById(contaId);
 		if (conta.isPresent()) {
-			return repo.menorMovimentacaoPorContaETipo(conta.get(), TipoMovimentacao.valueOf(tipo.toUpperCase()));
+			return repo.menorMovimentacaoPorContaETipo(conta.get(), TipoMovimentacao.toEnum(tipo));
 		}
 		return null;
 	}
 
-	public BigDecimal somaMovimentacoesPorContaTipoEPeriodo(Long contaId, String tipo, String from, String to) {
+	public BigDecimal somaMovimentacoesPorContaTipoEPeriodo(Long contaId, Integer tipo, String from, String to) {
 		Optional<Conta> conta = contaRepo.findById(contaId);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -100,7 +100,7 @@ public class MovimentacaoService implements ServiceInterface<Movimentacao> {
 			Date fim = dateFormat.parse(to);
 			if (conta.isPresent()) {
 				return repo.somaMovimentacoesPorContaTipoEPeriodo(conta.get(),
-						TipoMovimentacao.valueOf(tipo.toUpperCase()), inicio, fim);
+						TipoMovimentacao.toEnum(tipo), inicio, fim);
 			}
 		} catch (Exception e) {
 			return null;
