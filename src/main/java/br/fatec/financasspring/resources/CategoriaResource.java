@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class CategoriaResource implements ResourceInterface<Categoria> {
 
 	@Override
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Categoria> post(@RequestBody Categoria obj) {
 		categoriaService.create(obj);
 		return ResponseEntity.ok(obj);
@@ -47,6 +49,7 @@ public class CategoriaResource implements ResourceInterface<Categoria> {
 
 	@Override
 	@PutMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<?> put(@RequestBody Categoria obj) {
 		if (categoriaService.update(obj)) {
 			return ResponseEntity.ok(obj);
@@ -56,6 +59,7 @@ public class CategoriaResource implements ResourceInterface<Categoria> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (categoriaService.delete(id)) {
 			return ResponseEntity.ok().build();

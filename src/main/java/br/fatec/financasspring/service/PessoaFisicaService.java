@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.fatec.financasspring.exceptions.AuthorizationException;
 import br.fatec.financasspring.model.PessoaFisica;
+import br.fatec.financasspring.model.TipoPerfil;
 import br.fatec.financasspring.repositories.PessoaFisicaRepository;
+import br.fatec.financasspring.security.UserDetailsImpl;
 
 @Service
 public class PessoaFisicaService implements ServiceInterface<PessoaFisica> {
@@ -31,6 +34,10 @@ public class PessoaFisicaService implements ServiceInterface<PessoaFisica> {
 
 	@Override
 	public PessoaFisica findById(Long id) {
+		UserDetailsImpl user = ClienteService.authenticated();
+		if (user == null || (!user.hasRole(TipoPerfil.ADMIN) && !id.equals(user.getId()))) {
+			throw new AuthorizationException("Acesso negado!");
+		}
 		Optional<PessoaFisica> _pf = repo.findById(id);
 		return _pf.orElse(null);
 	}

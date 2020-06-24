@@ -1,8 +1,8 @@
 package br.fatec.financasspring.model;
 
 public enum TipoPerfil {
-	ADMIN(1, "HOLE_ADMIN"), 
-	CLIENTE(2, "HOLE_CLIENTE");
+	ADMIN(1, "ROLE_ADMIN"), 
+	CLIENTE(2, "ROLE_CLIENTE");
 	
 	private Integer cod;
 	private String descricao;

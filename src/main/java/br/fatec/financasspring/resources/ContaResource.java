@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 
 	@Override
 	@GetMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<List<Conta>> get() {
 		return ResponseEntity.ok(contas.findAll());
 	}
@@ -51,7 +53,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 	}
 
 	@Override
-	@PutMapping
+	@PutMapping	
 	public ResponseEntity<?> put(@RequestBody Conta obj) {
 		if (contas.update(obj)) {
 			return ResponseEntity.ok(obj);				
@@ -61,6 +63,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {		
 		if (contas.delete(id)) {
 			return ResponseEntity.ok().build();
@@ -69,6 +72,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 	}
 
 	@GetMapping(value = "/banco/{banco}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<?> getByBanco(
 	                @PathVariable("banco") String banco) {
 	   return ResponseEntity.ok(
@@ -76,6 +80,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 	}
 	
 	@GetMapping(value = "/banco/{banco}/{from}/{to}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<?> getByBancoENumero(
 	         @PathVariable("banco") String banco,
 	         @PathVariable("from") Integer from, 
@@ -85,6 +90,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 	}
 
 	@GetMapping(value = "/cliente/{nome}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<?> getByNomeCliente(
 	              @PathVariable("nome") String nome) {
 	   return ResponseEntity.ok(
