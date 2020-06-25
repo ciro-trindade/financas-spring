@@ -26,6 +26,10 @@ public class CategoriaService implements ServiceInterface<Categoria> {
 		return _categoria.orElse(null);
 	}
 
+	public List<Categoria> findByNome(String nome) {
+		return categoriaRepo.findByNomeContaining(nome);
+	}
+
 	@Override
 	public List<Categoria> findAll() {
 		return categoriaRepo.findAll();

@@ -44,7 +44,7 @@ public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 	}
 
 	@Override
-	@PostMapping
+	@PostMapping	
 	public ResponseEntity<Movimentacao> post(@RequestBody Movimentacao obj) {
 		movService.create(obj);
 		return ResponseEntity.ok(obj);

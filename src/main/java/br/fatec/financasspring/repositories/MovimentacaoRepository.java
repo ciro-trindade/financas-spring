@@ -5,11 +5,13 @@ import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import br.fatec.financasspring.model.Conta;
 import br.fatec.financasspring.model.Movimentacao;
 import br.fatec.financasspring.model.TipoMovimentacao;
 
+@Repository
 public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long> {
 	
 	@Query("select avg(m.valor) from Movimentacao m where m.conta = ?1 and m.tipo = ?2")

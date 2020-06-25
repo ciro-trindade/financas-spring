@@ -38,6 +38,13 @@ public class CategoriaResource implements ResourceInterface<Categoria> {
 			return ResponseEntity.ok(_categoria);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
+	
+	@GetMapping(value = "/nome/{nome}")
+	public ResponseEntity<List<Categoria>> getByNome(@PathVariable("nome") String nome) {
+		List<Categoria> _categorias = categoriaService.findByNome(nome);
+		return ResponseEntity.ok(_categorias);
+	}
+	
 
 	@Override
 	@PostMapping
